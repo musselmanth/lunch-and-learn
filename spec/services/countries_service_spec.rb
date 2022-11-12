@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe CountriesService do
-  it 'returns a list of all countries', :vcr do
+  it 'returns a list of all countries', vcr: {cassette_name: 'all countries'} do
     countries = CountriesService.get_all_countries
     expect(countries).to be_an(Array)
     expect(countries.length).to eq(250)
