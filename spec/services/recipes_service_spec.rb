@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe RecipesService do
-  it 'returns recipes for a country', :vcr do
+  it 'returns recipes for a country', vcr: {cassette_name: 'greek recipes'} do
     recipes = RecipesService.get_recipes("greece")
     
     expect(recipes).to be_a(Hash)
