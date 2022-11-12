@@ -1,24 +1,23 @@
-# README
+# Lunch and Learn
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## About
 
-Things you may want to cover:
+## Learning Goals
 
-* Ruby version
+## Local Setup
 
-* System dependencies
+```
+# clone the repository
+git clone git@github.com:musselmanth/lunch-and-learn.git
 
-* Configuration
+cd lunch-and-learn
+bundle install
 
-* Database creation
+# setup the database
+rails db:{create,migrate}
 
-* Database initialization
+# run the local server
+rails server
+```
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Database Schema Diagram
