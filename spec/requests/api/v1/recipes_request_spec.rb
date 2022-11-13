@@ -52,4 +52,28 @@ RSpec.describe 'Recipes Requests' do
       expect(recipe[:attributes][:country]).to eq("turkey")
     end
   end
+
+  it 'returns empty array for data if there are no results', vcr: {cassette_name: 'empty recipes'} do
+    get '/api/v1/recipes?country=musselmanland'
+
+    expect(response).to be_successful
+    expect(response).to have_http_status(200)
+
+    body = JSON.parse(response.body, symbolize_names: true)
+
+    expect(body[:data]).to be_an(Array)
+    expect(body[:data]).to be_empty
+  end
+
+  it 'returns empty data array if empty string is passed', vcr: {cassette_name: 'empty recipes'} do
+    get '/api/v1/recipes?country='
+
+    expect(response).to be_successful
+    expect(response).to have_http_status(200)
+
+    body = JSON.parse(response.body, symbolize_names: true)
+
+    expect(body[:data]).to be_an(Array)
+    expect(body[:data]).to be_empty
+  end
 end
