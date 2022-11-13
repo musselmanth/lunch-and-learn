@@ -25,8 +25,8 @@ RSpec.describe 'Learning Resource Requests' do
     expect(learning_resource[:attributes][:video][:title]).to be_a String
     expect(learning_resource[:attributes][:video][:youtube_video_id]).to be_a String
     expect(learning_resource[:attributes][:images]).to be_an Array
-
     expect(learning_resource[:attributes][:images]).to_not be_empty
+    expect(learning_resource[:attributes][:images].length).to eq(10)
 
     learning_resource[:attributes][:images].each do |image|
       expect(image).to be_a Hash
