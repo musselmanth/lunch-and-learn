@@ -71,17 +71,6 @@ RSpec.describe 'Learning Resource Requests' do
     learning_resource = body[:data]
 
     expect(learning_resource[:attributes][:video]).to eq({})
-  end
-
-  it 'returns empty array for images if there are not results', vcr: {cassette_name: 'no image video results'} do
-    get '/api/v1/learning_resources?country=ffffff'
-
-    expect(response).to be_successful
-    expect(response).to have_http_status(200)
-
-    body = JSON.parse(response.body, symbolize_names: true)
-    learning_resource = body[:data]
-
     expect(learning_resource[:attributes][:images]).to eq([])
   end
 end
