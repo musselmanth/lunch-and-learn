@@ -34,4 +34,30 @@ RSpec.describe 'Learning Resource Requests' do
       expect(image[:url]).to be_a String
     end
   end
+
+  it 'returns an error if no country provided' do
+    get '/api/v1/learning_resources'
+
+    expect(response).to_not be_successful
+    expect(response).to have_http_status(400)
+
+    errors = JSON.parse(response.body, symbolize_names: true)
+    expect(errors).to be_a Hash
+    expect(errors[:title]).to eq("Invalid Parameters")
+    expect(errors[:detail]).to eq("A country parameter is required for this request.")
+    expect(errors[:source]).to eq({parameter: "country"})
+  end
+
+  it 'returns an error if country parameter is blank' do
+    get '/api/v1/learning_resources?country='
+
+    expect(response).to_not be_successful
+    expect(response).to have_http_status(400)
+
+    errors = JSON.parse(response.body, symbolize_names: true)
+    expect(errors).to be_a Hash
+    expect(errors[:title]).to eq("Invalid Parameters")
+    expect(errors[:detail]).to eq("A country parameter is required for this request.")
+    expect(errors[:source]).to eq({parameter: "country"})
+  end
 end
