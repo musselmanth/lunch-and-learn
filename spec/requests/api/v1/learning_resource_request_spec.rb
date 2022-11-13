@@ -4,7 +4,7 @@ RSpec.describe 'Learning Resource Requests' do
   describe 'happy path'
 
   it 'returns a learning resource with video and image attributes' do
-    get '/api/v1/learning_resouces?country=laos'
+    get '/api/v1/learning_resources?country=laos'
 
     expect(response).to be_successful
     expect(response).to have_http_status(200)
