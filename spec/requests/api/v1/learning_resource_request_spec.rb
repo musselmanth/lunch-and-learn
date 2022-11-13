@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Learning Resource Requests' do
   describe 'happy path'
 
-  it 'returns a learning resource with video and image attributes' do
+  it 'returns a learning resource with video and image attributes', vcr: {cassette_name: 'laos images and video'} do
     get '/api/v1/learning_resources?country=laos'
 
     expect(response).to be_successful
@@ -16,9 +16,10 @@ RSpec.describe 'Learning Resource Requests' do
 
     learning_resource = body[:data]
     
-    expect(learning_resouce[:id]).to be nil
-    expect(learning_resouce[:type]).to eq("learning resource")
+    expect(learning_resource[:id]).to be nil
+    expect(learning_resource[:type]).to eq("learning_resource")
     expect(learning_resource[:attributes]).to be_a Hash
+    expect(learning_resource[:attributes].length).to eq(3)
     expect(learning_resource[:attributes][:country]).to eq("laos")
     expect(learning_resource[:attributes][:video]).to be_a Hash
     expect(learning_resource[:attributes][:video][:title]).to be_a String
