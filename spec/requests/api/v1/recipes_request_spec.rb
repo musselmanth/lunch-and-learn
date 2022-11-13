@@ -18,6 +18,7 @@ RSpec.describe 'Recipes Requests' do
       expect(recipe[:id]).to be(nil)
       expect(recipe[:type]).to eq("recipe")
       expect(recipe[:attributes]).to be_a(Hash)
+      expect(recipe[:attributes].length).to eq(4)
       expect(recipe[:attributes][:url]).to be_a(String)
       expect(recipe[:attributes][:title]).to be_a(String)
       expect(recipe[:attributes][:image]).to be_a(String)
@@ -43,12 +44,12 @@ RSpec.describe 'Recipes Requests' do
     body[:data].each do |recipe|
       expect(recipe[:id]).to be(nil)
       expect(recipe[:type]).to eq("recipe")
+      expect(recipe[:attributes].length).to eq(4)
       expect(recipe[:attributes]).to be_a(Hash)
       expect(recipe[:attributes][:url]).to be_a(String)
       expect(recipe[:attributes][:title]).to be_a(String)
       expect(recipe[:attributes][:image]).to be_a(String)
       expect(recipe[:attributes][:country]).to eq("turkey")
-      binding.pry
     end
   end
 end
