@@ -5,8 +5,8 @@ class LearningResource
     @id = nil
     @country = country
     @video = {
-      titlle: video_data[:snippet][:title],
-      youtube_video_id: video_data[:id][:videoID]
+      title: video_data[:snippet][:title],
+      youtube_video_id: video_data[:id][:videoId]
     }
     @images = images_data.map do |image_data|
       {
