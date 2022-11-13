@@ -48,6 +48,7 @@ RSpec.describe 'Recipes Requests' do
       expect(recipe[:attributes][:title]).to be_a(String)
       expect(recipe[:attributes][:image]).to be_a(String)
       expect(recipe[:attributes][:country]).to eq("turkey")
+      binding.pry
     end
   end
 end
