@@ -26,5 +26,24 @@ RSpec.describe 'get tourist sights endpoint' do
         expect(tourist_site[:attributes][:address]).to be_a String
       end
     end
+
+    it 'returns a random country if no country provided', vcr: {cassette_name: 'latvia tourist sights request'} do
+      allow(CountriesFacade).to receive(:random_country).and_return("latvia")
+      get '/api/v1/tourist_sights'
+
+      expect(response).to be_successful
+      expect(response).to have_http_status(200)
+  
+      body = JSON.parse(response.body, symbolize_names: true)
+
+      expect(body).to have_key(:data)
+      expect(body[:data]).to be_an(Array)
+  
+      tourist_sight = body[:data].first
+
+      expect(tourist_sight[:attributes][:address]).to include("Latvia")
+    end
   end
+
+
 end
