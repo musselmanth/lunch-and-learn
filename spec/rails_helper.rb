@@ -82,7 +82,8 @@ VCR.configure do |config|
   config.filter_sensitive_data('<edamam_app_id>') { ENV['edamam_app_id'] }
   config.filter_sensitive_data('<edamam_app_key>') { ENV['edamam_app_key'] }
   config.filter_sensitive_data('<google_api_key>') { ENV['google_api_key'] }
-  config.filter_sensitive_data('<unsplash_access_key>') { ENV['unsplash_app_key'] }
+  config.filter_sensitive_data('<unsplash_access_key>') { ENV['unsplash_access_key'] }
+  config.filter_sensitive_data('<geoapify_api_key>') { ENV['geoapify_api_key']}
 
   config.default_cassette_options = { :record => :new_episodes }
   config.configure_rspec_metadata!

@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe TouristSightFacade do
+RSpec.describe TouristSightsFacade do
   describe '#by_coordinates' do
     it 'returns an array of TouristSight POROs', vcr: {cassette_name: 'paris tourist sights'} do
-      tourist_sights = TouristSightFacade.by_coordinates(long: 2.33, lat: 48.87)
+      tourist_sights = TouristSightsFacade.by_coordinates(long: 2.33, lat: 48.87)
       tourist_sights.each do |tourist_sight|
         expect(tourist_sight).to be_instance_of TouristSight
         expect(tourist_sight.id).to be nil
