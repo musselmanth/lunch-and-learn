@@ -5,8 +5,8 @@ class CountriesService
     JSON.parse(response.body, symbolize_names: true)
   end
 
-  def self.get_country(country_name)
-    response = connection.get("v3.1/name/#{country_name}")
+  def self.get_country(country)
+    response = connection.get("v3.1/name/#{country}")
     JSON.parse(response.body, symbolize_names: true)
   end
 

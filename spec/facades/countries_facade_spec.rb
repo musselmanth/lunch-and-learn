@@ -10,8 +10,8 @@ RSpec.describe CountriesFacade do
     latlong = CountriesFacade.capital_latlong("france")
 
     expect(latlong).to be_a Hash
-    expect(latlong[:lat]).to be_a Float
-    expect(latlong[:long]).to be_a Float
-    expect(latlong.lenght).to eq(2)
+    expect(latlong[:lat]).to eq(48.87)
+    expect(latlong[:long]).to eq(2.33)
+    expect(latlong.length).to eq(2)
   end
 end
