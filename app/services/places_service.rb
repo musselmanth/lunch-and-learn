@@ -1,9 +1,9 @@
 class PlacesService
 
-  def self.get_tourist_sites(lat, long)
+  def self.get_tourist_sites(coordinates)
     response = connection.get('/v2/places', {
-      name: '',
-      categories: ''
+      filter: "circle:#{coordinates[:long]},#{coordinates[:lat]},20000",
+      categories: 'tourism.sights'
     })
     JSON.parse(response.body, symbolize_names: true)
   end
