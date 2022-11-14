@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe PlacesService do
-  it 'returns a response with a collection of features', vcr: {cassette_name: 'paris tourist sites'} do
+  it 'returns a response with a collection of features', vcr: {cassette_name: 'paris tourist sights'} do
     response = PlacesService.get_tourist_sites(long: 2.33, lat: 48.87)
 
     expect(response).to be_a Hash
@@ -22,9 +22,9 @@ RSpec.describe PlacesService do
     end
   end
 
-  it 'has same format for a differenct country', vcr: {cassette_name: 'wellington tourist sites'} do
+  it 'has same format for a differenct country', vcr: {cassette_name: 'wellington tourist sights'} do
     response = PlacesService.get_tourist_sites(long: 174.78, lat: -41.3)
-    
+
     expect(response).to be_a Hash
     expect(response[:type]).to eq("FeatureCollection")
     expect(response[:features]).to be_an Array
