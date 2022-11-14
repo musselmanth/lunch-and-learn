@@ -1,4 +1,4 @@
-class TouristSightFacade
+class TouristSightsFacade
   
   def self.by_coordinates(coordinates)
     tourist_sights_data = PlacesService.get_tourist_sites(coordinates)[:features]
