@@ -1,6 +1,5 @@
 class CountriesFacade
   def self.random_country
-    binding.pry
     all_country_names.sample
   end
 
