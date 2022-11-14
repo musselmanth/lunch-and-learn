@@ -43,6 +43,41 @@ RSpec.describe 'get tourist sights endpoint' do
 
       expect(tourist_sight[:attributes][:address]).to include("Latvia")
     end
+
+    it 'returns an error if the country provided is not valid', vcr: {cassette_name: 'all countries'} do
+      get '/api/v1/tourist_sights?country=genovia'
+
+      expect(response).to_not be_successful
+      expect(response).to have_http_status(404)
+
+      body = JSON.parse(response.body, symbolize_names: true)
+
+      expect(body).to have_key(:errors)
+      expect(body[:errors]).to be_an Array
+      expect(body[:errors].first).to eq({
+        title: "Invalid Parameters",
+        details: "The country provided cannot be found.",
+        source: {parameter: 'country'}
+      })
+    end
+
+    it 'returns the same error if the country parameter is blank', vcr: {cassette_name: 'all countries'} do
+      get '/api/v1/tourist_sights?country='
+
+      expect(response).to_not be_successful
+      expect(response).to have_http_status(404)
+
+      body = JSON.parse(response.body, symbolize_names: true)
+
+      expect(body).to have_key(:errors)
+      expect(body[:errors]).to be_an Array
+      expect(body[:errors].first).to eq({
+        title: "Invalid Parameters",
+        details: "The country provided cannot be found.",
+        source: {parameter: 'country'}
+      })
+    end
+
   end
 
 
