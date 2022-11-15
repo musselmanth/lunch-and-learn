@@ -71,8 +71,15 @@ RSpec.describe 'Learning Resource Requests' do
     expect(error[:source]).to eq({parameter: "country"})
   end
 
-  it 'returns empty object for video if there are not results', vcr: {cassette_name: 'no image video results'} do
-    get '/api/v1/learning_resources?country=ffffff'
+  it 'returns empty object for video if there are not results', vcr: {cassette_name: 'all countries'} do
+
+    stub_request(:get, "https://youtube.googleapis.com/youtube/v3/search?channelId=UCluQ5yInbeAkkeCndNnUhpw&key=#{ENV['google_api_key']}&maxResults=25&part=snippet&q=bhutan")
+      .to_return(body: file_fixture("empty_video_results.json").read)
+
+    stub_request(:get, "https://api.unsplash.com/search/photos?client_id=#{ENV['unsplash_access_key']}&query=bhutan")
+      .to_return(body: file_fixture("empty_image_results.json").read)
+
+    get '/api/v1/learning_resources?country=bhutan'
 
     expect(response).to be_successful
     expect(response).to have_http_status(200)
@@ -82,5 +89,18 @@ RSpec.describe 'Learning Resource Requests' do
 
     expect(learning_resource[:attributes][:video]).to eq({})
     expect(learning_resource[:attributes][:images]).to eq([])
+  end
+
+  it 'returns an error if the country is not valid', vcr: {cassette_name: 'all countries'} do
+    get '/api/v1/learning_resources?country=musselmanland'
+
+    expect(response).to_not be_successful
+    expect(response).to have_http_status(404)
+
+    body = JSON.parse(response.body, symbolize_names: true)
+
+    expect(body[:errors]).to be_an(Array)
+    expect(body[:errors].length).to eq(1)
+    expect(body[:errors].first[:detail]).to eq("The country provided cannot be found.")
   end
 end
