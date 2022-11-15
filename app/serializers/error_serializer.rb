@@ -25,7 +25,7 @@ class ErrorSerializer
     {
       errors: [{
         title: "Invalid Parameters",
-        details: "The country provided cannot be found.",
+        detail: "The country provided cannot be found.",
         source: {parameter: 'country'}
       }]
     }

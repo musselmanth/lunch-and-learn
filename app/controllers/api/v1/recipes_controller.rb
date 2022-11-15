@@ -8,6 +8,4 @@ class Api::V1::RecipesController < ApplicationController
       render json: ErrorSerializer.invalid_country, status: :not_found
     end
   end
-
-
 end
