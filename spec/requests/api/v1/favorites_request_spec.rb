@@ -113,5 +113,54 @@ RSpec.describe 'Favorites Requests' do
         expect(attributes).to have_key(:created_at)
       end
     end
+
+    describe 'sad path' do
+      it 'returns a 404 when the api key is not valid' do
+
+        get "/api/v1/favorites?api_key=r28AhgsEcdmwPBsU4eieaYSx"
+
+        expect(response).to_not be_successful
+        expect(response).to have_http_status(404)
+
+        body = JSON.parse(response.body, symbolize_names: true)
+
+        expect(body[:errors]).to be_an Array
+        expect(body[:errors].length).to eq(1)
+
+        first_error = body[:errors].first
+
+        expect(first_error[:detail]).to eq("The user could not be found with the provided api_key.")
+      end
+
+      it 'returns an empty array if the user has no favorites' do
+        user = create(:user)
+  
+        get "/api/v1/favorites?api_key=#{user.api_key}"
+
+        expect(response).to be_successful
+        expect(response).to have_http_status(200)
+
+        body = JSON.parse(response.body, symbolize_names: true)
+
+        expect(body[:data]).to be_an Array
+        expect(body[:data]).to be_empty
+      end
+
+      it 'error empty api_key' do
+        get "/api/v1/favorites?api_key="
+
+        expect(response).to_not be_successful
+        expect(response).to have_http_status(404)
+
+        body = JSON.parse(response.body, symbolize_names: true)
+
+        expect(body[:errors]).to be_an Array
+        expect(body[:errors].length).to eq(1)
+
+        first_error = body[:errors].first
+
+        expect(first_error[:detail]).to eq("The user could not be found with the provided api_key.")
+      end
+    end
   end
 end
