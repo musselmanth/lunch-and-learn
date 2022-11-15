@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :favorites
+
   validates_presence_of :name
   validates :email, uniqueness: true, presence: true
 

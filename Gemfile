@@ -48,7 +48,7 @@ end
 
 group :test do
   gem 'simplecov', require: false
-  gem 'shoulda-matchers', '~> 3.1'
+  gem 'shoulda-matchers', '~> 5.2'
   gem 'webmock'
   gem 'vcr'
 end
