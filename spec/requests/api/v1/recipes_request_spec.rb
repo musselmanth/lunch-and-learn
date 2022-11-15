@@ -53,27 +53,29 @@ RSpec.describe 'Recipes Requests' do
     end
   end
 
-  it 'returns empty array for data if there are no results', vcr: {cassette_name: 'empty recipes'} do
+  it 'returns an eror if the country is not valid', vcr: {cassette_name: 'all countries'} do
     get '/api/v1/recipes?country=musselmanland'
 
-    expect(response).to be_successful
-    expect(response).to have_http_status(200)
+    expect(response).to_not be_successful
+    expect(response).to have_http_status(404)
 
     body = JSON.parse(response.body, symbolize_names: true)
 
-    expect(body[:data]).to be_an(Array)
-    expect(body[:data]).to be_empty
+    expect(body[:errors]).to be_an(Array)
+    expect(body[:errors].length).to eq(1)
+    expect(body[:errors].first[:detail]).to eq("The country provided cannot be found.")
   end
 
-  it 'returns empty data array if empty string is passed', vcr: {cassette_name: 'empty recipes'} do
+  it 'returns empty data array if empty string is passed', vcr: {cassette_name: 'all countries'} do
     get '/api/v1/recipes?country='
 
-    expect(response).to be_successful
-    expect(response).to have_http_status(200)
+    expect(response).to_not be_successful
+    expect(response).to have_http_status(404)
 
     body = JSON.parse(response.body, symbolize_names: true)
 
-    expect(body[:data]).to be_an(Array)
-    expect(body[:data]).to be_empty
+    expect(body[:errors]).to be_an(Array)
+    expect(body[:errors].length).to eq(1)
+    expect(body[:errors].first[:detail]).to eq("The country provided cannot be found.")
   end
 end
