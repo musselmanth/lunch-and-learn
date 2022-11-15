@@ -44,15 +44,12 @@ RSpec.describe 'users requests' do
 
       expect(name_error[:title]).to eq("Invalid Attribute")
       expect(name_error[:detail]).to eq("Name can't be blank.")
-      expect(name_error[:source]).to eq({parameter: "name"})
 
       expect(email_error[:title]).to eq("Invalid Attribute")
       expect(email_error[:detail]).to eq("Email can't be blank.")
-      expect(email_error[:source]).to eq({parameter: "email"})
 
       expect(email_confirm_error[:title]).to eq("Invalid Attribute")
       expect(email_confirm_error[:detail]).to eq("Password Confirmation doesn't match Password.")
-      expect(email_confirm_error[:source]).to eq({parameter: "password_confirmation"})
     end
 
     it 'returns errors with a missing body' do
@@ -69,15 +66,12 @@ RSpec.describe 'users requests' do
 
       expect(name_error[:title]).to eq("Invalid Attribute")
       expect(name_error[:detail]).to eq("Name can't be blank.")
-      expect(name_error[:source]).to eq({parameter: "name"})
 
       expect(email_error[:title]).to eq("Invalid Attribute")
       expect(email_error[:detail]).to eq("Email can't be blank.")
-      expect(email_error[:source]).to eq({parameter: "email"})
 
       expect(email_confirm_error[:title]).to eq("Invalid Attribute")
       expect(email_confirm_error[:detail]).to eq("Password can't be blank.")
-      expect(email_confirm_error[:source]).to eq({parameter: "password"})
     end
 
   end

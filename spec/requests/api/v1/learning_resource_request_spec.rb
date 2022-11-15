@@ -50,7 +50,6 @@ RSpec.describe 'Learning Resource Requests' do
 
     expect(error[:title]).to eq("Invalid Parameters")
     expect(error[:detail]).to eq("A country parameter is required for this request.")
-    expect(error[:source]).to eq({parameter: "country"})
   end
 
   it 'returns an error if country parameter is blank' do
@@ -68,7 +67,6 @@ RSpec.describe 'Learning Resource Requests' do
 
     expect(error[:title]).to eq("Invalid Parameters")
     expect(error[:detail]).to eq("A country parameter is required for this request.")
-    expect(error[:source]).to eq({parameter: "country"})
   end
 
   it 'returns empty object for video if there are not results', vcr: {cassette_name: 'all countries'} do
