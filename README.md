@@ -32,8 +32,6 @@ rails server
 
 <img src="readme_images/db-schema-diagram.png">
 <br>
-<br>
-<br>
 
 ## Available Endpoints
 
@@ -240,7 +238,7 @@ GET `/favorites`
         "created_at": "2022-11-15T21:10:31.348Z"
       }
     },
-    ***etc...***
+    **etc...**
   ]
 }
 ```
