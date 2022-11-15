@@ -31,6 +31,8 @@ RSpec.describe 'Sessions Requests' do
       expect(attributes[:name]).to eq(user.name)
       expect(attributes[:email]).to eq(user.email)
       expect(attributes[:api_key]).to eq(user.api_key)
+
+      expect(session[:user_id]).to eq(user.id)
     end
   end
 
@@ -54,6 +56,8 @@ RSpec.describe 'Sessions Requests' do
       expect(body[:errors]).to be_an Array
       expect(body[:errors].length).to eq(1)
       expect(body[:errors].first[:detail]).to eq("The email or password provided is invalid.")
+
+      expect(session[:user_id]).to be nil
     end
 
     it 'returns error when email is incorrect' do
@@ -75,6 +79,8 @@ RSpec.describe 'Sessions Requests' do
       expect(body[:errors]).to be_an Array
       expect(body[:errors].length).to eq(1)
       expect(body[:errors].first[:detail]).to eq("The email or password provided is invalid.")
+
+      expect(session[:user_id]).to be nil
     end
   end
 end
