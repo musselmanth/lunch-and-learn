@@ -23,6 +23,11 @@ class Api::V1::FavoritesController < ApplicationController
     end
   end
 
+  def destroy
+    favorite = Favorite.find(params[:id])
+    favorite.destroy
+  end
+
   private
 
   def favorite_params

@@ -21,6 +21,17 @@ class ErrorSerializer
     }
   end
 
+  def self.not_found(message)
+    {
+      errors: [
+        {
+          title: "Not Found",
+          detail: message
+        }
+      ]
+    }
+  end
+
   def self.invalid_country
     {
       errors: [{
