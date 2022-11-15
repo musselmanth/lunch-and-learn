@@ -4,7 +4,6 @@ class ErrorSerializer
       errors: [{
         title: "Invalid Parameters",
         detail: "A #{parameter} parameter is required for this request.",
-        source: {parameter: parameter}
       }]
     }
   end
@@ -15,7 +14,6 @@ class ErrorSerializer
         {
           title: "Not Found",
           detail: "The user could not be found with the provided api_key.",
-          source: {parameter: "api_key"}
         }
       ]
     }
@@ -37,7 +35,6 @@ class ErrorSerializer
       errors: [{
         title: "Invalid Parameters",
         detail: "The country provided cannot be found.",
-        source: {parameter: 'country'}
       }]
     }
   end
@@ -48,9 +45,19 @@ class ErrorSerializer
         {
           title: "Invalid Attribute",
           detail: "#{attribute.to_s.titleize} #{message}.",
-          source: {parameter: attribute.to_s}
         }
       end
+    }
+  end
+
+  def self.invalid_login
+    {
+      errors: [
+        {
+          title: "Invalid Login",
+          detail: "The email or password provided is invalid."
+        }
+      ]
     }
   end
 end
