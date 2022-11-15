@@ -163,4 +163,36 @@ RSpec.describe 'Favorites Requests' do
       end
     end
   end
+
+  describe 'delete /api/v1/favorites/<id>' do
+    describe 'happy path' do
+      it 'deletes the requested favorite if the id is valid' do
+        user = create(:user)
+        favorite_1 = create(:favorite, user: user)
+        favorite_2 = create(:favorite, user: user)
+        favorite_3 = create(:favorite, user: user)
+
+        delete "/api/v1/favorites/#{favorite_2.id}"
+        
+        expect(response).to have_http_status(204)
+        expect(response.body).to eq("")
+
+        expect(Favorite.all).to match_array([favorite_1, favorite_3])
+      end
+    end
+
+    describe 'sad apth' do
+      it 'returns an error if the id is not found' do
+        delete "/api/v1/favorites/651"
+
+        expect(response).to_not be_successful
+        expect(response).to have_http_status(404)
+
+        body = JSON.parse(response.body, symbolize_names: true)
+        
+        expect(body[:errors]).to be_an Array
+        expect(body[:errors].first[:detail]).to eq("Couldn't find Favorite with 'id'=651")
+      end
+    end
+  end
 end
