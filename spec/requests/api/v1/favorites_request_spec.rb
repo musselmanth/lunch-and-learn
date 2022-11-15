@@ -4,7 +4,7 @@ RSpec.describe 'Favorites Requests' do
 
   let!(:headers) { {"CONTENT_TYPE" => "application/json"} }
 
-  describe 'post favorite' do
+  describe 'post /api/v1/favorites' do
 
     describe 'happy path' do
 
@@ -78,6 +78,39 @@ RSpec.describe 'Favorites Requests' do
         expect(body).to have_key(:errors)
         expect(body[:errors]).to be_an Array
         expect(body[:errors].length).to eq(3)
+      end
+    end
+  end
+
+  describe 'get /api/v1/favorites?api_key=<api_key>' do
+    describe 'happy path' do
+      it 'returns a list of the users favorites' do
+        user = create(:user)
+        favorite_1 = create(:favorite, user: user)
+        favorite_2 = create(:favorite, user: user)
+        favorite_3 = create(:favorite, user: user)
+
+        get "/api/v1/favorites?api_key=#{user.api_key}"
+
+        expect(response).to be_successful
+        expect(response).to have_http_status(200)
+
+        body = JSON.parse(response.body, symbolize_names: true)
+
+        expect(body[:data]).to be_an Array
+        expect(body[:data].length).to eq(3)
+
+        first_favorite = body[:data].first
+
+        expect(first_favorite[:id]).to eq(favorite_1.id.to_s)
+        expect(first_favorite[:type]).to eq("favorite")
+        expect(first_favorite[:attributes]).to be_a Hash
+        expect(first_favorite[:attributes].length).to eq(4)
+        attributes = first_favorite[:attributes]
+        expect(attributes[:recipe_link]).to eq(favorite_1.recipe_link)
+        expect(attributes[:recipe_title]).to eq(favorite_1.recipe_title)
+        expect(attributes[:country]).to eq(favorite_1.country)
+        expect(attributes).to have_key(:created_at)
       end
     end
   end
