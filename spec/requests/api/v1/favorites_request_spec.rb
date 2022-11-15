@@ -35,5 +35,50 @@ RSpec.describe 'Favorites Requests' do
         expect(body[:success]).to eq("Favorite added successfully")
       end
     end
+
+    describe 'sad path' do
+      it 'returns error if invalid api_key' do
+        user = create(:user)
+
+        payload = JSON.generate({
+          "api_key": "r28AhgsEcdmwPBsU4eieaYSx",
+          "country": "thailand",
+          "recipe_link": "https://www.tastingtable.com/recipe1",
+          "recipe_title": "Crab Fried Rice (Khaao Pad Bpu)"
+        })
+
+        post '/api/v1/favorites', headers: headers, params: payload
+
+        expect(response).to_not be_successful
+        expect(response).to have_http_status(404)
+
+        body = JSON.parse(response.body, symbolize_names: true)
+
+        expect(body).to have_key(:errors)
+        expect(body[:errors].first[:detail]).to eq("The user could not be found with the provided api_key.")
+      end
+
+      it 'returns validation errors for favorite' do
+        user = create(:user)
+
+        payload = JSON.generate({
+          "api_key": user.api_key,
+          "country": "",
+          "recipe_link": "",
+          "recipe_title": ""
+        })
+
+        post '/api/v1/favorites', headers: headers, params: payload
+
+        expect(response).to_not be_successful
+        expect(response).to have_http_status(400)
+
+        body = JSON.parse(response.body, symbolize_names: true)
+        
+        expect(body).to have_key(:errors)
+        expect(body[:errors]).to be_an Array
+        expect(body[:errors].length).to eq(3)
+      end
+    end
   end
 end
