@@ -21,6 +21,16 @@ class ErrorSerializer
     }
   end
 
+  def self.invalid_country
+    {
+      errors: [{
+        title: "Invalid Parameters",
+        details: "The country provided cannot be found.",
+        source: {parameter: 'country'}
+      }]
+    }
+  end
+
   def self.validation_errors(errors)
     {
       errors: errors.map do |attribute, message|
